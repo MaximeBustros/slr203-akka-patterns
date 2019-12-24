@@ -17,7 +17,6 @@ public class FirstActor extends UntypedAbstractActor{
 
 	public FirstActor(ActorRef actorRef) {
 		this.actorRef = actorRef;
-		log.info("I was linked to actor reference {}", this.actorRef);
 	}
 
 	// Static function creating actor Props
