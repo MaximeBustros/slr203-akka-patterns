@@ -23,10 +23,14 @@ public class SecondActor extends UntypedAbstractActor {
 
 	@Override
 	public void onReceive(Object message) throws Throwable {
-		if (message instanceof String) {
-			log.info("["+getSelf().path().name()+"] received message ["+message+"] from ["+ getSender().path().name() +"]");
+		if (message instanceof Request) {
+			Request req = (Request) message;
+			log.info("["+getSelf().path().name()+"] received message ["+req.text+"] from ["+ getSender().path().name() +"]");
+			
+			Thread.sleep(500);
+			Response resp = new Response("Response to message [" + req.text + "]");
+			// log.info("send response [" + resp.text + "] to ["+ getSender().path().name() + "]");
+			getSender().tell(resp, getSelf());
 		}
 	}
-	
-	
 }

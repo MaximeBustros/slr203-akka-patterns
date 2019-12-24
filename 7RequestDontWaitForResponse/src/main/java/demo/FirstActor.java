@@ -3,18 +3,23 @@ package demo;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.actor.UntypedAbstractActor;
+import akka.event.Logging;
+import akka.event.LoggingAdapter;
 
 public class FirstActor extends UntypedAbstractActor{
 
+	// Logger attached to actor
+	private final LoggingAdapter log = Logging.getLogger(getContext().getSystem(), this);
+
 	// Actor reference
 	private ActorRef actorRef;
-	private ActorRef transmitter;
+	private int count;
 
 	public FirstActor() {}
 
 	public FirstActor(ActorRef actorRef) {
-		this.transmitter = transmitter;
 		this.actorRef = actorRef;
+		this.count = 1;
 	}
 
 	// Static function creating actor
@@ -27,9 +32,15 @@ public class FirstActor extends UntypedAbstractActor{
 
 	@Override
 	public void onReceive(Object message) throws Throwable {
-		if(message instanceof Start){
-			MessageWithReference messageWithReference = new MessageWithReference(actorRef, "Hello World!");
-			transmitter.tell(messageWithReference, getSelf());
+		if(message instanceof Start) {
+			// Send request to actorRef
+			Request req = new Request("Message " + count++);
+			actorRef.tell(req, getSelf());
+			log.info("["+getSelf().path().name()+"] sent request ["+req.text+"] to ["+ actorRef.path().name() + "]");
+		} else if(message instanceof Response) {
+			// Log response
+			Response resp = (Response) message;
+			log.info("["+getSelf().path().name()+"] received response ["+resp.text+"] from ["+ getSender().path().name() +"]");
 		}
 	}
 

@@ -16,12 +16,12 @@ public class RequestDontWaitForResponse {
 		
 		// Instantiate first and second actor
 		final ActorRef b = system.actorOf(SecondActor.createActor(), "b");
-		final ActorRef a = system.actorOf(FirstActor.createActor(transmitter, b), "a");
+		// Pass b by reference
+		final ActorRef a = system.actorOf(FirstActor.createActor(b), "a");
 		
-	    final Start start = new Start();
-			// send to a1 the reference of a2 by message
-			//be carefull, here it is the main() function that sends a message to a1, 
-			//not a1 telling to a2 as you might think when looking at this line:
+		// Start the system and force a to send two messages to b in a row
+		final Start start = new Start();
+		a.tell(start, ActorRef.noSender());
 		a.tell(start, ActorRef.noSender());
 
 	    // We wait 5 seconds before ending system (by default)
