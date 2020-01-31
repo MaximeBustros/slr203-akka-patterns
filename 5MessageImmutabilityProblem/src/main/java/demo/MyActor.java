@@ -28,17 +28,17 @@ public class MyActor extends UntypedAbstractActor{
 	public void onReceive(Object message) throws Throwable {
 		if(message instanceof MyBrokenMessage){
 			this.brokenMessage = (MyBrokenMessage) message;
-			log.info("("+getSelf().path().name()+") received a broken message from ("+ getSender().path().name() +")");
+			log.info("["+getSelf().path().name()+"] received a broken message from ["+ getSender().path().name() +"]");
 		}
 		if(message instanceof MyCorrectMessage){
 			this.correctMessage = (MyCorrectMessage) message;
-			log.info("("+getSelf().path().name()+") received a correct message from ("+ getSender().path().name() +")");
+			log.info("["+getSelf().path().name()+"] received a correct message from ["+ getSender().path().name() +"]");
 		}
 		if(message instanceof PrintBrokenMessage){
-			log.info("Broken message: list="+this.brokenMessage.list+" i="+this.brokenMessage.i+" p.getName()="+this.brokenMessage.p.getName()+ " s="+this.brokenMessage.s);
+			log.info("Broken message: list="+this.brokenMessage.list+", i="+this.brokenMessage.i+", p.getName()="+this.brokenMessage.p.getName()+ " s="+this.brokenMessage.s);
 		}
 		if(message instanceof PrintCorrectMessage){
-			log.info("Correct message: list="+this.correctMessage.list+" i="+this.correctMessage.i+" p.getName()="+this.correctMessage.p.getName()+ " s="+this.correctMessage.s);
+			log.info("Correct message: list="+this.correctMessage.list+" i="+this.correctMessage.i+", p.getName()="+this.correctMessage.p.getName()+ " s="+this.correctMessage.s);
 		}
 	}
 
