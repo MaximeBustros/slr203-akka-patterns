@@ -36,10 +36,17 @@ public class SessionChildActor {
 			Thread.sleep(1500);
 		} catch (Exception e) { e.printStackTrace(); }
 		client1.tell(sendRequest, ActorRef.noSender());
+		
+		try {
+			waitBeforeTerminate();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+			system.terminate();
+		}
 	}
 
 	public static void waitBeforeTerminate() throws InterruptedException {
 		Thread.sleep(5000);
 	}
-
 }

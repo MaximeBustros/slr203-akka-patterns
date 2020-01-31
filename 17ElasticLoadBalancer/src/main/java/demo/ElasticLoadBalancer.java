@@ -32,11 +32,14 @@ public class ElasticLoadBalancer {
 
 		try {
 			waitBeforeTerminate();
-		} catch (Exception e) { e.printStackTrace(); }
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+			system.terminate();
+		}
 	}
 
 	public static void waitBeforeTerminate() throws InterruptedException {
 		Thread.sleep(5000);
 	}
-
 }
