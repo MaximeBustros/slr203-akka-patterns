@@ -13,7 +13,9 @@ public class FirstActor extends UntypedAbstractActor{
 	// Actor reference
 	private ActorRef actorRef;
 
-	public FirstActor() {}
+	public FirstActor() {
+		log.info("[" + getSelf().path().name() + "] was created");
+	}
 
 	// Static function creating actor
 	public static Props createActor() {
@@ -25,10 +27,9 @@ public class FirstActor extends UntypedAbstractActor{
 
 	@Override
 	public void onReceive(Object message) throws Throwable {
-		if(message instanceof ActorRef){
-		this.actorRef = (ActorRef) message;
-		log.info("["+getSelf().path().name()+"] received message from ["+ getSender().path().name() +"]");
-		log.info("Actor reference updated ! New reference is: {}", this.actorRef);
+		if(message instanceof ActorRef) {
+			this.actorRef = (ActorRef) message;
+			log.info("["+getSelf().path().name()+"] received ActorRef [" + actorRef.path().name() + "] from ["+ getSender().path().name() +"]");
 		}
 	}
 
